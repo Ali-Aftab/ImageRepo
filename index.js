@@ -1,7 +1,7 @@
 const path = require("path");
 const express = require("express");
 const app = express();
-const { db, User, Picture } = require("./db");
+const { db, User, Picture } = require("./server/db");
 const PORT = process.env.PORT || 8000;
 // const seed = require('./seed.js');
 
@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, ".", "public")));
 
 // API routes are prefixed with /api/ -
 // this is purely done to namespace them away from your "front-end routes" (such as those created by react-router).
-app.use("/api", require("./apiRoutes")); // matches all requests to /api
+app.use("/api", require("./server/apiRoutes")); // matches all requests to /api
 
 app.get("*", function (req, res, next) {
   res.sendFile(path.join(__dirname, "./public/index.html"));

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 
+// router.use("/auth", require("./auth"));
 router.use("/users", require("./users")); // matches all requests to /api/users/
 //router.use("/blogposts", require("./blogposts")); // matches all requests to  /api/blogposts/
 
