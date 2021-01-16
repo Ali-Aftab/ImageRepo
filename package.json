@@ -1,0 +1,40 @@
+{
+  "name": "imagerepo",
+  "version": "1.0.0",
+  "description": "Image repository to view and upload images",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "start-dev": "webpack -w & nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "keywords": [
+    "node",
+    "js",
+    "postgresql",
+    "postgres",
+    "express",
+    "sequelize"
+  ],
+  "author": "Ali Aftab",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.5.1",
+    "pg-hstore": "^2.3.3",
+    "react": "^17.0.1",
+    "sequelize": "^6.3.5"
+  },
+  "devDependencies": {
+    "@webpack-cli/init": "^1.1.1",
+    "webpack": "^5.14.0"
+  }
+}
