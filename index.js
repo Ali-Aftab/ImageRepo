@@ -26,7 +26,9 @@ app.use(express.static(path.join(__dirname, ".", "public")));
 
 // API routes are prefixed with /api/ -
 // this is purely done to namespace them away from your "front-end routes" (such as those created by react-router).
-app.use("/api", require("./server/apiRoutes")); // matches all requests to /api
+// app.use("/api", require("./server/apiRoutes")); // matches all requests to /api
+require("./server/routes/auth")(app);
+require("./server/routes/users")(app);
 
 app.get("*", function (req, res, next) {
   res.sendFile(path.join(__dirname, "./public/index.html"));

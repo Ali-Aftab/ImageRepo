@@ -2,14 +2,6 @@ const crypto = require("crypto");
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-// const instanceMethods = {
-//   toJSON() {
-//     const values = Object.assign({}, this.get());
-
-//     return values;
-//   },
-// };
-
 const User = db.define("user", {
   email: {
     type: Sequelize.STRING,
@@ -74,6 +66,5 @@ User.beforeUpdate(setSaltAndPassword);
 User.beforeBulkCreate((users) => {
   users.forEach(setSaltAndPassword);
 });
-console.log(User.belongsTo);
 
 module.exports = { User };
