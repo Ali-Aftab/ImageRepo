@@ -33,7 +33,7 @@ Making an account is required to upload and delete your images.
 
 *POST `/api/picture/upload` allows a registered user to upload an image
 *Requires an x-access-token inside the header and the image must be attached as a file. In Postman, this can be achieved by going to form-data option under body. Then change the key value from text to file.
-*Can add a description to the image inside the body {description: This is a picture of something cool}
+**Can add a description to the image inside the body {description: This is a picture of something cool}
 *GET `/api/picture/listAll` allows anyone to view all the images in the repository
 *Will provide the image Id, description, and url to the image.
 *GET `/api/picture/:pictureId` allows anyone to view one image, must provide an id.
