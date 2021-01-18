@@ -8,14 +8,24 @@ const uploadFiles = async (req, res) => {
       if (oneFile === undefined) {
         return res.json({ message: "You must select a file." });
       }
+      let description = req.body.description;
+      if (!description) {
+        description = "";
+      }
+
       const onePic = await Picture.create({
         type: oneFile.mimetype,
         name: oneFile.originalname,
         url: "/resources/static/assets" + oneFile.filename,
         userId: req.userId,
+        description,
       });
+      const picInfo = fs.readFileSync(
+        __basedir + "/resources/static/assets/uploads/" + oneFile.filename
+      );
       fs.writeFileSync(
-        __basedir + "/resources/static/assets/tmp/" + onePic.name
+        __basedir + "/resources/static/assets/tmp/" + onePic.name,
+        picInfo
       );
     }
     return res.json({ message: "File(s) has uploaded" });
