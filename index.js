@@ -4,6 +4,7 @@ const app = express();
 const { db, User, Picture } = require("./server/db");
 const PORT = process.env.PORT || 8000;
 // const seed = require('./seed.js');
+global.__basedir = __dirname;
 
 //--------------------->Body parser <---------------------//
 const bodyParser = require("body-parser");
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, ".", "public")));
 // app.use("/api", require("./server/apiRoutes")); // matches all requests to /api
 require("./server/routes/auth")(app);
 require("./server/routes/users")(app);
+require("./server/routes/upload")(app);
 
 app.get("*", function (req, res, next) {
   res.sendFile(path.join(__dirname, "./public/index.html"));

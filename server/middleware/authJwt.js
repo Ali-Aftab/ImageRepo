@@ -12,7 +12,7 @@ verifyToken = (req, res, next) => {
   jwt.verify(token, secret, (err, decoded) => {
     if (err) {
       return res.status(401).send({
-        message: "not allowed",
+        message: "Not allowed",
       });
     }
     req.userId = decoded.id;
