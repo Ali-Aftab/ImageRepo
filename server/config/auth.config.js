@@ -1,3 +1,3 @@
 module.exports = {
-  secret: "imagerepo-secret-key",
+  secret: process.env.SECRET_JWT_KEY,
 };

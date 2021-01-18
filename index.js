@@ -5,6 +5,7 @@ const { db, User, Picture } = require("./server/db");
 const PORT = process.env.PORT || 8000;
 // const seed = require('./seed.js');
 global.__basedir = __dirname;
+require("dotenv").config();
 
 //--------------------->Body parser <---------------------//
 const bodyParser = require("body-parser");
