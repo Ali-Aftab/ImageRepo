@@ -1,6 +1,4 @@
 const multer = require("multer");
-const { fileURLToPath } = require("url");
-const { dirname } = require("path");
 
 const imageFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) {
@@ -11,11 +9,6 @@ const imageFilter = (req, file, cb) => {
 };
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    console.log(req.files);
-    // const __filename = fileURLToPath(import.meta.url);
-    // const __dirname = dirname(__filename);
-    // const __basedir = path.dirname(import.meta.url).replace(/^file:\/\/\//, "");
-    console.log(__basedir);
     cb(null, __basedir + "/resources/static/assets/uploads/");
   },
   filename: (req, file, cb) => {

@@ -3,13 +3,11 @@ const { Picture } = require("../db");
 
 const uploadFiles = async (req, res) => {
   try {
-    console.log(req.userId);
     for (let i = 0; i < req.files.length; i++) {
       const oneFile = req.files[i];
       if (oneFile === undefined) {
         return res.json({ message: "You must select a file." });
       }
-      console.log("TACO", oneFile.filename);
       const onePic = await Picture.create({
         type: oneFile.mimetype,
         name: oneFile.originalname,
