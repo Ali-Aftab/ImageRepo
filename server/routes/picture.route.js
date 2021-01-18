@@ -1,5 +1,8 @@
 const { authJwt, uploadFile } = require("../middleware");
-const { uploadFiles } = require("../controllers/picture.controller");
+const {
+  uploadFiles,
+  searchFiles,
+} = require("../controllers/picture.controller");
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -15,4 +18,5 @@ module.exports = function (app) {
     uploadFile.any("file"),
     uploadFiles
   );
+  app.get("/api/picture/search", [authJwt.verifyToken], searchFiles);
 };
