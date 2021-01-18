@@ -2,6 +2,9 @@ const { authJwt, uploadFile } = require("../middleware");
 const {
   uploadFiles,
   searchFiles,
+  listAllFiles,
+  deleteFile,
+  listOneFile,
 } = require("../controllers/picture.controller");
 
 module.exports = function (app) {
@@ -12,11 +15,19 @@ module.exports = function (app) {
     );
     next();
   });
+  //upload image
   app.post(
     "/api/picture/upload",
     [authJwt.verifyToken],
     uploadFile.any("file"),
     uploadFiles
   );
-  app.get("/api/picture/search", [authJwt.verifyToken], searchFiles);
+  //get one image
+  app.get("/api/picture/:pictureId", listOneFile);
+  //delete one image
+  app.delete("/api/picture/:pictureId", deleteFile);
+  //get all public images
+  app.get("/api/picture/listAll", listAllFiles);
+  //search image repository
+  app.get("/api/picture/search", searchFiles);
 };

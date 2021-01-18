@@ -37,6 +37,40 @@ const uploadFiles = async (req, res) => {
   }
 };
 
+const listOneFile = async (req, res) => {
+  try {
+    const oneFile = await Picture.findByPk(req.params.pictureId);
+    res.json({ file: oneFile });
+  } catch (error) {
+    console.log(error);
+    res.json({ message: "Error occured to locate file" });
+  }
+};
+
+const deleteFile = async (req, res) => {
+  try {
+    const oneFile = await Picture.destroy({
+      where: {
+        id: req.params.pictureId,
+      },
+    });
+    res.status(202).send({ message: "File deleted" });
+  } catch (error) {
+    console.log(error);
+    res.json({ message: "Error occured during deletion" });
+  }
+};
+
+const listAllFiles = async (req, res) => {
+  try {
+    const allFiles = await Picture.findAll();
+    res.json({ files: allFiles });
+  } catch (error) {
+    console.log(error);
+    res.json({ message: "Error occured when grabing all photos", error });
+  }
+};
+
 const searchFiles = async (req, res) => {
   try {
     if (!req.body.searchQuery) {
@@ -68,5 +102,8 @@ const searchFiles = async (req, res) => {
 
 module.exports = {
   uploadFiles,
+  listOneFile,
+  deleteFile,
+  listAllFiles,
   searchFiles,
 };
