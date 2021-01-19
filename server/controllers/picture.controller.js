@@ -4,12 +4,12 @@ const { Op } = require("sequelize");
 
 const uploadFiles = async (req, res) => {
   try {
+    if (req.files.length === 0) {
+      return res.json({ message: "You must select a file." });
+    }
     for (let i = 0; i < req.files.length; i++) {
       console.log(req.body);
       const oneFile = req.files[i];
-      if (oneFile === undefined) {
-        return res.json({ message: "You must select a file." });
-      }
       let description = req.body.description;
       if (!description) {
         description = "";
@@ -18,7 +18,7 @@ const uploadFiles = async (req, res) => {
       const onePic = await Picture.create({
         type: oneFile.mimetype,
         name: oneFile.originalname,
-        url: "/resources/static/assets" + oneFile.filename,
+        url: "/resources/static/assets/" + oneFile.filename,
         userId: req.userId,
         description,
       });
@@ -30,7 +30,8 @@ const uploadFiles = async (req, res) => {
         picInfo
       );
     }
-    return res.json({ message: "File(s) has uploaded" });
+
+    res.json({ message: "File(s) has uploaded" });
   } catch (error) {
     console.log(error);
     return res.json({ message: "Error occured during upload", error });
@@ -40,11 +41,17 @@ const uploadFiles = async (req, res) => {
 const listOneFile = async (req, res) => {
   try {
     const oneFile = await Picture.findByPk(req.params.pictureId);
+    console.log(oneFile);
     res.json({ file: oneFile });
   } catch (error) {
     console.log(error);
     res.json({ message: "Error occured to locate file" });
   }
+};
+
+const listOneURL = async (req, res) => {
+  try {
+  } catch (error) {}
 };
 
 const deleteFile = async (req, res) => {
