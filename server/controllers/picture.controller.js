@@ -48,7 +48,14 @@ const listOneFile = async (req, res) => {
 };
 
 const deleteFile = async (req, res) => {
+  const { userId } = req;
   try {
+    const selectedFile = await Picture.findByPk(req.params.pictureId);
+    if (selectedFile.userId !== userId) {
+      return res.json({
+        message: "You don't have access to deleting this Image!",
+      });
+    }
     const oneFile = await Picture.destroy({
       where: {
         id: req.params.pictureId,

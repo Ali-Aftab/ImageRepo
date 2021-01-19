@@ -25,7 +25,7 @@ module.exports = function (app) {
   //get one image
   app.get("/api/picture/:pictureId", listOneFile);
   //delete one image
-  app.delete("/api/picture/:pictureId", deleteFile);
+  app.delete("/api/picture/:pictureId", [authJwt.verifyToken], deleteFile);
   //get all public images
   app.get("/api/picture/listAll", listAllFiles);
   //search image repository
