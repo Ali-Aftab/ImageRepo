@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { Picture } = require("../db");
+const { Image } = require("../db");
 const { Op } = require("sequelize");
 const PORT = process.env.PORT || 8000;
 
@@ -16,7 +16,7 @@ const uploadFiles = async (req, res) => {
       }
       const imagePath = "/resources/static/assets/";
 
-      const onePic = await Picture.create({
+      const oneImage = await Image.create({
         type: oneFile.mimetype,
         name: oneFile.originalname,
         url: imagePath + "uploads/" + oneFile.filename,
@@ -25,10 +25,13 @@ const uploadFiles = async (req, res) => {
         fullURL:
           "localhost:" + PORT + imagePath + "uploads/" + oneFile.filename, //this will change once we get into production
       });
-      const picInfo = fs.readFileSync(
+      const imageInfo = fs.readFileSync(
         __basedir + imagePath + "uploads/" + oneFile.filename
       );
-      fs.writeFileSync(__basedir + imagePath + "tmp/" + onePic.name, picInfo);
+      fs.writeFileSync(
+        __basedir + imagePath + "tmp/" + oneImage.name,
+        imageInfo
+      );
     }
 
     res.json({ message: "File(s) has uploaded" });
@@ -40,7 +43,7 @@ const uploadFiles = async (req, res) => {
 
 const listOneFile = async (req, res) => {
   try {
-    const oneFile = await Picture.findByPk(req.params.pictureId);
+    const oneFile = await Image.findByPk(req.params.pictureId);
     res.json({ file: oneFile });
   } catch (error) {
     console.log(error);
@@ -50,8 +53,7 @@ const listOneFile = async (req, res) => {
 
 const listOneURL = async (req, res) => {
   try {
-    const oneFile = await Picture.findByPk(req.params.pictureId);
-    const picURL = `${oneFile.url}`;
+    const oneFile = await Image.findByPk(req.params.pictureId);
     res.writeHead(302, {
       location: oneFile.url,
     });
@@ -65,13 +67,13 @@ const listOneURL = async (req, res) => {
 const deleteFile = async (req, res) => {
   const { userId } = req;
   try {
-    const selectedFile = await Picture.findByPk(req.params.pictureId);
+    const selectedFile = await Image.findByPk(req.params.pictureId);
     if (selectedFile.userId !== userId) {
       return res.json({
         message: "You don't have access to deleting this Image!",
       });
     }
-    const oneFile = await Picture.destroy({
+    const oneFile = await Image.destroy({
       where: {
         id: req.params.pictureId,
       },
@@ -85,7 +87,7 @@ const deleteFile = async (req, res) => {
 
 const listAllFiles = async (req, res) => {
   try {
-    const allFiles = await Picture.findAll();
+    const allFiles = await Image.findAll();
     res.json({ files: allFiles });
   } catch (error) {
     console.log(error);
@@ -99,7 +101,7 @@ const searchFiles = async (req, res) => {
       return res.json({ message: "Please type a search query!" });
     }
     const { searchQuery } = req.body;
-    const searchList = await Picture.findAll({
+    const searchList = await Image.findAll({
       where: {
         [Op.or]: [
           {

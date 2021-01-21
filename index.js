@@ -1,7 +1,7 @@
 const path = require("path");
 const express = require("express");
 const app = express();
-const { db, User, Picture } = require("./server/db");
+const { db, User, Image } = require("./server/db");
 const PORT = process.env.PORT || 8000;
 // const seed = require('./seed.js');
 global.__basedir = __dirname;

@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const Picture = db.define("picture", {
+const Image = db.define("image", {
   name: {
     type: Sequelize.STRING,
   },
@@ -19,4 +19,4 @@ const Picture = db.define("picture", {
   },
 });
 
-module.exports = { Picture };
+module.exports = { Image };
