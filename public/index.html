@@ -23,6 +23,127 @@
     <script src="/bundle.js" defer></script>
   </head>
   <body>
-    <div id="app"><h1>Image Repository</h1></div>
+    <div id="app">
+      <h1 id="imagerepo">ImageRepo</h1>
+      <p>
+        This project is an API that allows users to build an image repository.
+        The app lets you view images as a non-user. Regular users can upload and
+        delete their images. This project used Node.js, Express, PostgreSQL, and
+        Sequelize.
+      </p>
+      <h2 id="get-started">Get Started</h2>
+      <p>To run this application:</p>
+      <ol>
+        <li>
+          In your terminal type
+          <code>git clone https://github.com/Ali-Aftab/ImageRepo.git</code> to
+          clone it to your computer.<br />
+        </li>
+        <li>Then type <code>cd ImageRepo</code> to access the folder<br /></li>
+        <li>To install the required modules type <code>npm i</code><br /></li>
+        <li>
+          Make a new PostgreSQL database by writing
+          <code>createdb imagerepo</code><br />
+        </li>
+        <li>
+          Create a .env file by typing <code>touch .env</code> to store your
+          secret keys<br />
+        </li>
+        <li>
+          In the .env file type <code>SECRET_JWT_KEY=ENTERYOURKEYHERE</code
+          ><br />
+        </li>
+        <li>
+          Type <code>npm run start-dev</code> in your terminal and you can use
+          the API!
+        </li>
+      </ol>
+      <h2 id="api">API</h2>
+      <p>
+        First, we recommend installing
+        <a href="https://www.postman.com/">Postman</a> to easily test out the
+        API. Remember to add <code>localhost:8000</code> to the URL before
+        typing in the API path.
+        (<code>/api/auth/signup</code>=&gt;<code>localhost:8000/api/signup</code>)
+      </p>
+      <h3 id="sign-up-login-routes">Sign Up/ Login Routes</h3>
+      <p>Making an account is required to upload and delete your images.</p>
+      <ul>
+        <li>
+          POST <code>/api/auth/signup</code> allows anyone to make an account
+          <br /><br />
+          -Requires an email and password key inside the body <br /><br />
+          -Example {email:
+          <script type="text/javascript">
+            <!--
+            h = "&#116;&#x65;&#x73;&#116;&#46;&#x63;&#x6f;&#x6d;";
+            a = "&#64;";
+            n = "&#116;&#x65;&#x73;&#116;";
+            e = n + a + h;
+            document.write(
+              "<a h" +
+                "ref" +
+                '="ma' +
+                "ilto" +
+                ":" +
+                e +
+                '">' +
+                e +
+                "<\/" +
+                "a" +
+                ">"
+            );
+            // -->
+          </script>
+          <noscript
+            >&#116;&#x65;&#x73;&#116;&#32;&#x61;&#116;&#32;&#116;&#x65;&#x73;&#116;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;</noscript
+          >, password: password1} <br /><br />
+        </li>
+        <li>
+          POST <code>/api/auth/signin</code> when logged in, the response will
+          give the user an access token. The access token must be placed in the
+          header (with &quot;x-access-token&quot; as the key and the given
+          accessToken as the value)<br />
+          -Requires an email and password key inside the body. Also the
+          x-access-token inside the header.<br /><br />
+          -The x-access-token lasts for 24 hours. <br />
+        </li>
+      </ul>
+      <h3 id="image-routes">Image Routes</h3>
+      <ul>
+        <li>
+          POST <code>/api/image/upload</code> allows a registered user to upload
+          an image <br /><br />
+          -Requires an x-access-token inside the header and the image must be
+          attached as a file. In Postman, this can be achieved by going to the
+          form-data option under the body section. Then change the key value
+          from text to file. <br /><br />
+          -Can add a description to the image inside the body {description: This
+          is image is cool} <br /><br />
+        </li>
+        <li>
+          GET <code>/api/image/listAll</code> allows anyone to view all the
+          images data and information in the repository <br /><br />
+          -Will provide the image Id, description, and URL to the image.
+          <br /><br />
+        </li>
+        <li>
+          GET <code>/api/image/:imageId</code> allows anyone to view one image's
+          data and information, must provide an id. <br /><br />
+          -Replace <code>:imageId</code> with the id in the URL. <br /><br />
+        </li>
+        <li>
+          GET <code>/api/image/direct/:imageId</code> allows anyone to view one
+          image, must provide an id. <br /><br />
+          -Replace <code>:imageId</code> with the id in the URL. <br /><br />
+        </li>
+        <li>
+          DELETE <code>api/image/imageId</code> allows the user to delete the
+          image that is owned/associated with. <br /><br />
+          -Requires an x-access-token in the header and replace
+          <code>:imageId</code> with the id in the URL.
+        </li>
+      </ul>
+    </div>
   </body>
 </html>
