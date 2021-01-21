@@ -25,14 +25,17 @@ app.use(morgan("dev"));
 
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, ".", "public")));
+// app.use(express.static(path.join(__dirname, ".", "resources")));
+app.use("/resources", express.static(path.join(__dirname, "resources")));
 
 // API routes are prefixed with /api/ -
 // this is purely done to namespace them away from your "front-end routes" (such as those created by react-router).
-// app.use("/api", require("./server/apiRoutes")); // matches all requests to /api
 require("./server/routes/auth.route")(app);
 require("./server/routes/user.route")(app);
 require("./server/routes/picture.route")(app);
 
+// app.use("/resources", express.static(__dirname + "/resources"));
+// app.use("/static", express.static(path.join(__dirname, "resources")));
 app.get("*", function (req, res, next) {
   res.sendFile(path.join(__dirname, "./public/index.html"));
 });

@@ -1,6 +1,7 @@
 const fs = require("fs");
 const { Picture } = require("../db");
 const { Op } = require("sequelize");
+const PORT = process.env.PORT || 8000;
 
 const uploadFiles = async (req, res) => {
   try {
@@ -8,27 +9,26 @@ const uploadFiles = async (req, res) => {
       return res.json({ message: "You must select a file." });
     }
     for (let i = 0; i < req.files.length; i++) {
-      console.log(req.body);
       const oneFile = req.files[i];
       let description = req.body.description;
       if (!description) {
         description = "";
       }
+      const imagePath = "/resources/static/assets/";
 
       const onePic = await Picture.create({
         type: oneFile.mimetype,
         name: oneFile.originalname,
-        url: "/resources/static/assets/" + oneFile.filename,
+        url: imagePath + "uploads/" + oneFile.filename,
         userId: req.userId,
         description,
+        fullURL:
+          "localhost:" + PORT + imagePath + "uploads/" + oneFile.filename, //this will change once we get into production
       });
       const picInfo = fs.readFileSync(
-        __basedir + "/resources/static/assets/uploads/" + oneFile.filename
+        __basedir + imagePath + "uploads/" + oneFile.filename
       );
-      fs.writeFileSync(
-        __basedir + "/resources/static/assets/tmp/" + onePic.name,
-        picInfo
-      );
+      fs.writeFileSync(__basedir + imagePath + "tmp/" + onePic.name, picInfo);
     }
 
     res.json({ message: "File(s) has uploaded" });
@@ -41,7 +41,6 @@ const uploadFiles = async (req, res) => {
 const listOneFile = async (req, res) => {
   try {
     const oneFile = await Picture.findByPk(req.params.pictureId);
-    console.log(oneFile);
     res.json({ file: oneFile });
   } catch (error) {
     console.log(error);
@@ -51,7 +50,16 @@ const listOneFile = async (req, res) => {
 
 const listOneURL = async (req, res) => {
   try {
-  } catch (error) {}
+    const oneFile = await Picture.findByPk(req.params.pictureId);
+    const picURL = `${oneFile.url}`;
+    res.writeHead(302, {
+      location: oneFile.url,
+    });
+    res.end();
+  } catch (error) {
+    console.log(error);
+    res.json({ message: "Error occured to locate file" });
+  }
 };
 
 const deleteFile = async (req, res) => {
@@ -117,6 +125,7 @@ const searchFiles = async (req, res) => {
 module.exports = {
   uploadFiles,
   listOneFile,
+  listOneURL,
   deleteFile,
   listAllFiles,
   searchFiles,

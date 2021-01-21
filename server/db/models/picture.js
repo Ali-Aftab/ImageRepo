@@ -14,6 +14,9 @@ const Picture = db.define("picture", {
   url: {
     type: Sequelize.STRING,
   },
+  fullURL: {
+    type: Sequelize.STRING,
+  },
 });
 
 module.exports = { Picture };
