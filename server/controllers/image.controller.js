@@ -106,12 +106,12 @@ const searchFiles = async (req, res) => {
         [Op.or]: [
           {
             name: {
-              [Op.like]: "%" + searchQuery + "%",
+              [Op.iLike]: `%${searchQuery}%`,
             },
           },
           {
             description: {
-              [Op.like]: "%" + searchQuery + "%",
+              [Op.iLike]: `%${searchQuery}%`,
             },
           },
         ],
