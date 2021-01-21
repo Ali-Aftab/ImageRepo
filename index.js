@@ -32,7 +32,7 @@ app.use("/resources", express.static(path.join(__dirname, "resources")));
 // this is purely done to namespace them away from your "front-end routes" (such as those created by react-router).
 require("./server/routes/auth.route")(app);
 require("./server/routes/user.route")(app);
-require("./server/routes/picture.route")(app);
+require("./server/routes/image.route")(app);
 
 // app.use("/resources", express.static(__dirname + "/resources"));
 // app.use("/static", express.static(path.join(__dirname, "resources")));

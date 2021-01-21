@@ -43,7 +43,7 @@ const uploadFiles = async (req, res) => {
 
 const listOneFile = async (req, res) => {
   try {
-    const oneFile = await Image.findByPk(req.params.pictureId);
+    const oneFile = await Image.findByPk(req.params.imageId);
     res.json({ file: oneFile });
   } catch (error) {
     console.log(error);
@@ -53,7 +53,7 @@ const listOneFile = async (req, res) => {
 
 const listOneURL = async (req, res) => {
   try {
-    const oneFile = await Image.findByPk(req.params.pictureId);
+    const oneFile = await Image.findByPk(req.params.imageId);
     res.writeHead(302, {
       location: oneFile.url,
     });
@@ -67,7 +67,7 @@ const listOneURL = async (req, res) => {
 const deleteFile = async (req, res) => {
   const { userId } = req;
   try {
-    const selectedFile = await Image.findByPk(req.params.pictureId);
+    const selectedFile = await Image.findByPk(req.params.imageId);
     if (selectedFile.userId !== userId) {
       return res.json({
         message: "You don't have access to deleting this Image!",
@@ -75,7 +75,7 @@ const deleteFile = async (req, res) => {
     }
     const oneFile = await Image.destroy({
       where: {
-        id: req.params.pictureId,
+        id: req.params.imageId,
       },
     });
     res.status(202).send({ message: "File deleted" });

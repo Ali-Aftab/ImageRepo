@@ -18,19 +18,19 @@ module.exports = function (app) {
   });
   //upload image
   app.post(
-    "/api/picture/upload",
+    "/api/image/upload",
     [authJwt.verifyToken],
     uploadFile.any("file"),
     uploadFiles
   );
-  //get one image data
-  app.get("/api/picture/:pictureId", listOneFile);
-  //get one image url and direct the user there
-  app.get("/api/picture/direct/:pictureId", listOneURL);
-  //delete one image
-  app.delete("/api/picture/:pictureId", [authJwt.verifyToken], deleteFile);
   //get all public image data
-  app.get("/api/picture/listAll", listAllFiles);
+  app.get("/api/image/listall", listAllFiles);
   //search image repository
-  app.get("/api/picture/search", searchFiles);
+  app.get("/api/image/search", searchFiles);
+  //get one image data
+  app.get("/api/image/:imageId", listOneFile);
+  //get one image url and direct the user there
+  app.get("/api/image/direct/:imageId", listOneURL);
+  //delete one image
+  app.delete("/api/image/:imageId", [authJwt.verifyToken], deleteFile);
 };
